@@ -9,7 +9,6 @@ app.whenReady().then(async () => {
         width: 1000,
         height: 700,
 
-        // 配置窗口的WebPreferences选项，用于控制渲染进程的行为
         webPreferences: {
             nodeIntegration: true, // 启用Node.js集成
             contextIsolation: false, // 禁用上下文隔离
