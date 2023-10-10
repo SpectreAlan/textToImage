@@ -159,7 +159,8 @@ export default {
         if (response.error) {
           console.log(response.error);
         } else {
-          this.imagePaths = response.files;
+          console.log(response);
+          this.imagePaths = response;
         }
       });
     },
@@ -178,10 +179,11 @@ export default {
         reader.readAsDataURL(file);
       }
     },
-    getRandomBackgroundImage() {
-      const file =
+    async getRandomBackgroundImage() {
+      const filePath =
           this.imagePaths[parseInt(Math.random() * this.imagePaths.length)];
-      const img = `data:image/jpeg;base64,${file.data.toString('base64')}`
+      const data = fs.readFileSync(filePath, 'base64')
+      const img = `data:image/jpeg;base64,${data.toString('base64')}`
       this.form.backgroundImage = img;
       return img;
     },
@@ -234,10 +236,10 @@ export default {
       },
     },
     backgroundImage: {
-      handler(val) {
+      async handler(val) {
         const key = {
           none: "",
-          random: this.getRandomBackgroundImage(),
+          random: await this.getRandomBackgroundImage(),
         };
         this.form.backgroundImage = key[val];
       },

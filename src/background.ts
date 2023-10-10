@@ -34,23 +34,8 @@ app.whenReady().then(async () => {
                 event.sender.send('read-directory-response', { error: err.message });
             } else {
                 const imageFilePattern = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
-                const fileDataPromises = files.filter(file=>imageFilePattern.test(file)).map((file) => {
-                    const filePath = path.join(directoryPath, file);
-                    return new Promise((resolve) => {
-                        fs.readFile(filePath, 'base64', (readErr, data) => {
-                            if (readErr) {
-                                resolve({ error: readErr.message });
-                            } else {
-                                resolve({ fileName: file, data });
-                            }
-                        });
-                    });
-                });
-
-                // 等待所有文件读取完成后发送响应
-                Promise.all(fileDataPromises).then((results) => {
-                    event.sender.send('read-directory-response', { files: results });
-                });
+                const results = files.filter(file=>imageFilePattern.test(file)).map((file) => path.join(directoryPath, file));
+                event.sender.send('read-directory-response', results);
             }
         });
     });
