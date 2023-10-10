@@ -1,0 +1,20 @@
+{
+  "extends": "@tsconfig/node18/tsconfig.json",
+  "include": [
+    "src/**/**/*.vue",
+    "src/*.vue",
+    "plugins/*.ts",
+    "vite.config.*",
+    "vitest.config.*",
+    "cypress.config.*",
+    "nightwatch.conf.*",
+    "playwright.config.*"
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["node"]
+  }
+}
