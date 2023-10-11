@@ -1,4 +1,5 @@
 import {app, BrowserWindow, ipcMain, Menu} from 'electron'
+import readImages from "./events/readImages";
 
 const installExtension = require('electron-devtools-installer');
 const fs = require('fs')
@@ -40,11 +41,12 @@ app.whenReady().then(async () => {
     ];
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
+
+
     if (process.env.NODE_ENV === 'development') {
         installExtension.default(installExtension.VUEJS_DEVTOOLS)
             .then(name => {
                 console.log(`Added Extension: ${name}`);
-                // 打开开发者工具
                 win.webContents.openDevTools();
             })
             .catch(err => console.log('An error occurred: ', err));
@@ -57,15 +59,5 @@ app.whenReady().then(async () => {
     }
 
 
-    ipcMain.on('read-directory', (event, directoryPath) => {
-        fs.readdir(directoryPath, (err, files) => {
-            if (err) {
-                event.sender.send('read-directory-response', {error: err.message});
-            } else {
-                const imageFilePattern = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
-                const results = files.filter(file => imageFilePattern.test(file)).map((file) => path.join(directoryPath, file));
-                event.sender.send('read-directory-response', results);
-            }
-        });
-    });
+    readImages()
 })

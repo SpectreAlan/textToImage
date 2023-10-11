@@ -272,6 +272,9 @@ watch(
 );
 onMounted(() => {
   loadImages()
+  ipcRenderer.on('ctrl-c-pressed', () => {
+    // captureAndCopyToClipboard()
+  });
 })
 </script>
 
