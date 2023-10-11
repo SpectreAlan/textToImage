@@ -18,7 +18,7 @@ export const viteElectronDev = (): Plugin => {
                     bundle: true,
                     outfile: 'dist/background.js',
                     platform: 'node',
-                    target: 'node12',
+                    target: 'node16',
                     external: ['electron']
                 })
             }

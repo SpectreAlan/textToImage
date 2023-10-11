@@ -19,7 +19,7 @@ export const viteElectronBuild = (): Plugin => {
                     bundle: true,
                     outfile: 'dist/background.js',
                     platform: 'node',
-                    target: 'node12',
+                    target: 'node16',
                     external: ['electron'],
                 })
             }
@@ -38,12 +38,13 @@ export const viteElectronBuild = (): Plugin => {
             // 使用electron-builder打包Electron应用程序
             electronBuilder.build({
                 config: {
-                    appId: 'com.example.app',
-                    productName: 'vite-electron',
+                    appId: 'com.fuck.app',
+                    productName: '文字转图',
                     directories: {
                         output: path.join(process.cwd(), "release"), //输出目录
                         app: path.join(process.cwd(), "dist"), //app目录
                     },
+                    icon: path.join(process.cwd(), 'src/assets/logo.png'),
                     asar: true,
                     nsis: {
                         oneClick: false, //取消一键安装
